@@ -1,17 +1,17 @@
 # Flarum Github Autolink
 
-Convert references to Github issues (`#123`) and commits (`@abc1234`) automatically into links.
+Convert references to Github issues and commits automatically into links.
 
-###How To Install
-run below command while you're in Flarum root folder:
-```
+## How To Install
+
+Run follow command via ssh while you're in Flarum root folder:
+
+```bash
 composer require sijad/flarum-ext-github-autolink
 ```
 
-now you need to enable it in Flarum admin page and set Main repository name in extension settings
+then enable the extension from Flarum admin Extension page.
 
-### TODO
+## TODO
 
-* Add pull request support
-* Retrieve links detail
-* Support `Username/Repository#` and `Username/Repository@SHA` [More](https://help.github.com/articles/autolinked-references-and-urls)
+* Retrieve links details form Github (e.g. title).

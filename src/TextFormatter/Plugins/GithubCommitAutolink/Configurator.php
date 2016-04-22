@@ -10,23 +10,17 @@ use s9e\TextFormatter\Plugins\ConfiguratorBase;
 
 class Configurator extends ConfiguratorBase
 {
-    protected $quickMatch = '@';
-    protected $regexp = '/(?:^|\\b.+?|\\s)(@[0-9a-f]{7,40})/Si';
+    protected $regexp = '/(?:^|\\b)(?:https?\\:\\/\\/github\\.com\\/([\\w-]+\\/[\\w-]+)\\/commit\\/([0-9a-f]{7,40})|([\\w-]+\\/[\\w-]+)@([0-9a-f]{7,40}))/Si';
     protected $tagName = 'GITHUBCOMMIT';
-    protected $repo = '';
 
     protected function setUp()
     {
         if (isset($this->configurator->tags[$this->tagName])) {
             return;
         }
-        $this->configurator->tags->add($this->tagName);
-        $this->resetTemplate();
-    }
-
-    public function setGithubRepo($repo)
-    {
-        $this->repo = $repo;
+        $tag = $this->configurator->tags->add($this->tagName);
+        $tag->attributes->add('repo');
+        $tag->attributes->add('commit');
         $this->resetTemplate();
     }
 
@@ -37,12 +31,10 @@ class Configurator extends ConfiguratorBase
 
     protected function resetTemplate()
     {
-        if (!empty($this->repo)) {
-            $template = '<a class="github-commit-link"><xsl:attribute name="href">';
-            $template .= "https://github.com/{$this->repo}/commit/";
-            $template .= '<xsl:value-of select="substring(./text(), 2)"/></xsl:attribute>';
-            $template .= '@<code><xsl:value-of select="substring(./text(), 2, 7)"/></code></a>';
-            $this->getTag()->template = $template;
-        }
+        $template = '<a class="github-commit-link"><xsl:attribute name="href">';
+        $template .= 'https://github.com/<xsl:value-of select="@repo"/>';
+        $template .= '/commit/<xsl:value-of select="@commit"/></xsl:attribute>';
+        $template .= '<xsl:value-of select="@repo"/>@<code><xsl:value-of select="substring(@commit, 1, 7)"/></code></a>';
+        $this->getTag()->template = $template;
     }
 }

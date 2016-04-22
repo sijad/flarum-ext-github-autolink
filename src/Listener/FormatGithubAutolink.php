@@ -40,8 +40,10 @@ class FormatGithubAutolink
     {
         foreach (['CommitAutolink', 'IssueAutolink'] as $plugin) {
             $name = "Github{$plugin}";
-            $event->configurator->plugins->set($name, "Sijad\\GithubAutolink\\TextFormatter\\Plugins\\{$name}\\Configurator");
-            $event->configurator->plugins->get($name)->setGithubRepo($this->settings->get('sijad-github-autolink.repository'));
+            $event->configurator->plugins->set(
+                $name,
+                "Sijad\\GithubAutolink\\TextFormatter\\Plugins\\{$name}\\Configurator"
+            );
         }
     }
 }

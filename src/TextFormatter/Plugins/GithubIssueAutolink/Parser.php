@@ -14,7 +14,18 @@ class Parser extends ParserBase
     {
         $tagName = $this->config['tagName'];
         foreach ($matches as $m) {
-            $this->parser->addSelfClosingTag($this->config['tagName'], $m[1][1], \strlen($m[1][0]));
+            $tag = $this->parser->addSelfClosingTag(
+                $tagName,
+                $m[0][1],
+                \strlen($m[0][0])
+            );
+            $tag->setAttributes(
+                [
+                    'repo' => $m[1][1] >= 0 ? $m[1][0] : $m[3][0],
+                    'issue' => $m[2][1] >= 0 ? $m[2][0] : $m[4][0],
+                ]
+            );
+            $tag->setSortPriority(-10);
         }
     }
 }

@@ -1,4 +1,9 @@
 matches.forEach(function(m)
 {
-  addSelfClosingTag(config.tagName, m[1][1], m[1][0].length);
+  var tag = addSelfClosingTag(config.tagName, m[0][1], m[0][0].length);
+	tag.setAttributes({
+    'repo': m[1][1] >= 0 ? m[1][0] : m[3][0],
+    'commit': m[2][1] >= 0 ? m[2][0] : m[4][0]
+  });
+	tag.setSortPriority(-10);
 });
