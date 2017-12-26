@@ -6,7 +6,7 @@
 
 namespace Sijad\GithubAutolink\Listener;
 
-use Flarum\Event\ConfigureFormatter;
+use Flarum\Formatter\Event\Configuring;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -30,13 +30,13 @@ class FormatGithubAutolink
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(ConfigureFormatter::class, [$this, 'addGithubAutokinkFormatter']);
+        $events->listen(Configuring::class, [$this, 'addGithubAutokinkFormatter']);
     }
 
     /**
-     * @param ConfigureFormatter $event
+     * @param Configuring $event
      */
-    public function addGithubAutokinkFormatter(ConfigureFormatter $event)
+    public function addGithubAutokinkFormatter(Configuring $event)
     {
         foreach (['CommitAutolink', 'IssueAutolink'] as $plugin) {
             $name = "Github{$plugin}";
