@@ -17,7 +17,8 @@ class Parser extends ParserBase
             $tag = $this->parser->addSelfClosingTag(
                 $tagName,
                 $m[0][1],
-                \strlen($m[0][0])
+                \strlen($m[0][0]),
+                -10
             );
             $tag->setAttributes(
                 [
@@ -25,7 +26,6 @@ class Parser extends ParserBase
                     'commit' => $m[2][1] >= 0 ? $m[2][0] : $m[4][0],
                 ]
             );
-            $tag->setSortPriority(-10);
         }
     }
 }
